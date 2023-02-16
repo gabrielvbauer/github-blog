@@ -22,6 +22,12 @@ export const InfoContainer = styled.header`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
   }
 
   footer {
@@ -36,6 +42,8 @@ export const InfoContainer = styled.header`
 
       svg {
         color: ${(props) => props.theme['base-400']};
+        width: 18px;
+        height: 18px;
       }
     }
   }
