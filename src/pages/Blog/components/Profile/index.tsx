@@ -23,6 +23,7 @@ export function Profile() {
             href="https://github.com/gabrielvbauer"
             target="_blank"
             rel="noreferrer"
+            id="link"
           >
             GITHUB <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
           </a>

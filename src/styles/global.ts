@@ -54,7 +54,7 @@ export const GlobalStyle = createGlobalStyle`
     color: ${(props) => props.theme['base-300']}
   }
 
-  a {
+  a[id="link"] {
     font-size: 0.75rem;
     line-height: 160%;
     font-weight: bold;
@@ -65,5 +65,10 @@ export const GlobalStyle = createGlobalStyle`
     &:hover {
       border-bottom: 1px solid ${(props) => props.theme['blue-500']};
     }
+  }
+
+  a {
+    text-decoration: none;
+    color: unset;
   }
 `

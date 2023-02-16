@@ -8,6 +8,7 @@ import {
   PostsContainer,
   PostsGrid,
 } from './styles'
+import { NavLink } from 'react-router-dom'
 
 export function Blog() {
   return (
@@ -27,12 +28,21 @@ export function Blog() {
         <SearchInput />
 
         <PostsGrid>
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          <NavLink to={'/post'} title="post">
+            <Post />
+          </NavLink>
+          <NavLink to={'/post'} title="post">
+            <Post />
+          </NavLink>
+          <NavLink to={'/post'} title="post">
+            <Post />
+          </NavLink>
+          <NavLink to={'/post'} title="post">
+            <Post />
+          </NavLink>
+          <NavLink to={'/post'} title="post">
+            <Post />
+          </NavLink>
         </PostsGrid>
       </PostsContainer>
     </BlogContainer>

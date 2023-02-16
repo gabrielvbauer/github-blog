@@ -14,12 +14,12 @@ export function Post() {
     <PostContainer>
       <PostInfo>
         <header>
-          <a href="/">
+          <a id="link">
             <FontAwesomeIcon icon={faChevronLeft} />
             VOLTAR
           </a>
 
-          <a href="#">
+          <a href="https://github.com/gabrielvbauer" id="link">
             VER NO GITHUB
             <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
           </a>
