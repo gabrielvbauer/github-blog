@@ -25,6 +25,7 @@ export const PostInfo = styled.div`
       display: flex;
       align-items: center;
       gap: 8px;
+      cursor: pointer;
     }
   }
 
@@ -50,4 +51,9 @@ export const PostInfo = styled.div`
 
 export const PostContent = styled.div`
   padding: 40px 32px;
+  white-space: pre-wrap;
+
+  img {
+    width: 100%;
+  }
 `

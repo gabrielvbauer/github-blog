@@ -24,6 +24,7 @@ export const PostContainer = styled.div`
   }
 
   p {
+    max-height: 112px;
     margin-top: 20px;
     text-overflow: ellipsis;
     overflow: hidden;

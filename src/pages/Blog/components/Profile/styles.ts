@@ -16,7 +16,11 @@ export const ProfileContainer = styled.div`
   }
 `
 
-export const InfoContainer = styled.header`
+export const InfoContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
   header {
     display: flex;
     justify-content: space-between;
@@ -28,6 +32,10 @@ export const InfoContainer = styled.header`
       align-items: center;
       gap: 8px;
     }
+  }
+
+  p {
+    height: 100%;
   }
 
   footer {

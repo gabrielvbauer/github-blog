@@ -1,27 +1,36 @@
+import { NavLink } from 'react-router-dom'
+import { formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+import { PostType } from '../..'
 import { PostContainer } from './styles'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 
-export function Post() {
+interface PostProps {
+  post: PostType
+}
+
+export function Post({ post }: PostProps) {
+  const createdDateRelativeToNow = formatDistanceToNow(post.createdAt, {
+    locale: ptBR,
+    addSuffix: true,
+  })
+
+  const resume = (
+    <ReactMarkdown includeElementIndex>{post.content}</ReactMarkdown>
+  )
+
   return (
-    <PostContainer>
-      <header>
-        <h2>JavaScript data types and data structures</h2>
-        <span>
-          <time>Há 1 dia</time>
-        </span>
-      </header>
+    <NavLink to={`/post/${post.number}`} title={post.title}>
+      <PostContainer>
+        <header>
+          <h2>{post.title}</h2>
+          <span>
+            <time>{createdDateRelativeToNow}</time>
+          </span>
+        </header>
 
-      <p>
-        Programming languages all have built-in data structures, but these often
-        differ from one language to another. This article attempts to list the
-        built-in data structures available in JavaScript and what properties
-        they have. Programming languages all have built-in data structures, but
-        these often differ from one language to another. This article attempts
-        to list the built-in data structures available in JavaScript and what
-        properties they have Programming languages all have built-in data
-        structures, but these often differ from one language to another. This
-        article attempts to list the built-in data structures available in
-        JavaScript and what properties they have
-      </p>
-    </PostContainer>
+        <p>{resume}</p>
+      </PostContainer>
+    </NavLink>
   )
 }

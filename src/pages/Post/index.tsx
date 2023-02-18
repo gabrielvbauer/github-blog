@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faChevronLeft,
@@ -8,48 +10,116 @@ import {
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
 import { PostContainer, PostInfo, PostContent } from './styles'
+import { api } from '../../lib/axios'
+import { formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+import ReactMarkdown from 'react-markdown'
+
+interface PostTypeResponse {
+  id: number
+  number: number
+  html_url: string
+  title: string
+  user: {
+    login: string
+  }
+  comments: number
+  created_at: string
+  body: string
+}
+
+interface PostType {
+  id: number
+  number: number
+  url: string
+  title: string
+  author: string
+  commentsAmount: number
+  createdAt: Date
+  content: string
+}
 
 export function Post() {
+  const [post, setPost] = useState<PostType>({} as PostType)
+  const { postNumber } = useParams()
+
+  const navigate = useNavigate()
+
+  async function loadPost() {
+    const URL =
+      '/repos/' +
+      import.meta.env.VITE_GITHUB_USER +
+      '/' +
+      import.meta.env.VITE_GITHUB_REPO +
+      '/issues/' +
+      postNumber
+
+    const response = await api.get(URL)
+
+    const data: PostTypeResponse = response.data
+
+    setPost({
+      id: data.id,
+      number: data.number,
+      url: data.html_url,
+      title: data.title,
+      author: data.user.login,
+      commentsAmount: data.comments,
+      createdAt: new Date(data.created_at),
+      content: data.body,
+    })
+  }
+
+  useEffect(() => {
+    loadPost()
+  }, [])
+
   return (
     <PostContainer>
       <PostInfo>
         <header>
-          <a id="link">
+          <a id="link" onClick={() => navigate('/')}>
             <FontAwesomeIcon icon={faChevronLeft} />
             VOLTAR
           </a>
 
-          <a href="https://github.com/gabrielvbauer" id="link">
+          <a href={post.url} id="link">
             VER NO GITHUB
             <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
           </a>
         </header>
 
-        <h1>JavaScript data types and data structures</h1>
+        <h1>{post.title}</h1>
 
         <footer>
           <div>
             <FontAwesomeIcon icon={faGithub} />
-            <p>gabrielvbauer</p>
+            <p>{post.author}</p>
           </div>
 
           <div>
             <FontAwesomeIcon icon={faCalendarDay} />
-            <p>Há 1 dia</p>
+            <p>
+              {post.createdAt &&
+                formatDistanceToNow(post.createdAt, {
+                  locale: ptBR,
+                  addSuffix: true,
+                })}
+            </p>
           </div>
 
           <div>
             <FontAwesomeIcon icon={faComment} />
-            <p>3 comentários</p>
+            <p>
+              {post.commentsAmount}{' '}
+              {post.commentsAmount > 1 ? 'comentários' : 'comentário'}
+            </p>
           </div>
         </footer>
       </PostInfo>
 
       <PostContent>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique
-        aspernatur vero alias assumenda cum voluptates voluptas facere quibusdam
-        quis commodi. Commodi nesciunt quo enim modi fugit ullam est voluptates
-        laboriosam!
+        <ReactMarkdown>{post.content}</ReactMarkdown>
       </PostContent>
     </PostContainer>
   )
